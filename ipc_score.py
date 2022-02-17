@@ -1,4 +1,6 @@
 import math
+import matplotlib.pyplot as plt
+import numpy as np
 
 track_events = ("100", "200", "400", "800", "1500", "5000", "10000" )
 field_events = ("SP", "DT", "JT", "OT", "HJ", "LJ", "TJ" )
@@ -24,11 +26,27 @@ def ipc_score(event, gender, cat, performance, youth = None):
     score = math.floor(score)
     return score
 
-times = [10.43, 10.98, 12.12, 13.89, 15.99 ]
+watimes = [10.43, 10.98, 11.51, 12.12, 13.00, 13.89, 15.99 ]
+wa = [1063, 892, 742, 586, 394, 238, 25]
+
+times = np.linspace(10.0,16.0, 101)
+ipc = []
 
 for time in times:
+    ipc.append(ipc_score("100", "M", "T11", time ) )
     print ( time, ipc_score("100", "M", "T11", time ) )
     
+
+
+
+fig, ax = plt.subplots()
+plt.plot(times, ipc, label="ipc T41")
+plt.plot(watimes, wa, 'x', label="wa")
+plt.legend()
+plt.show()
+
+
+
 """
 # code example convert hh:mm:ss format to secs
 ts = '1:23:45'
