@@ -5,7 +5,7 @@ field_events = ("SP", "DT", "JT", "OT", "HJ", "LJ", "TJ" )
 
 coefficients = { "100" : { "M" : { "T11" : ( 1200, 11.068111, 140.2461) } } }
 
-def ipc_score(event, gender, cat, performance, youth = None):
+def ipc_score(event, gender, cat, performance, youth = None, custom = None):
     p = performance 
 
     a = coefficients[event][gender][cat][0]
@@ -15,7 +15,6 @@ def ipc_score(event, gender, cat, performance, youth = None):
     #print( a,b,c )
     if event in track_events:
         score = a*math.exp( -math.exp(b-c/p) )
-        print (score)
     elif event in field_events:
         score = a*math.exp( -math.exp(b-c*p) )
     else:
