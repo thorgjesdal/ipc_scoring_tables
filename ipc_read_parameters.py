@@ -1,6 +1,7 @@
 import sys
 import pprint
 import json
+import re
 from openpyxl import load_workbook
 
 gender = { 'Men' : 'M', 'M' : 'M', 'Women' : 'F', 'W' : 'F'}
@@ -22,6 +23,9 @@ def ipc_read_parameters(f):
         e = event_codes[ value[1] ]
         g = gender[ value[0] ]
         c = value[2]
+        if '/' in c:
+            cc = re.split('-|/', c)
+            print(cc, cc[0][-2:], cc[1][-2:])
         if e not in ipc_parameters.keys():
             ipc_parameters[e] = {}
         if g not in ipc_parameters[e].keys():
