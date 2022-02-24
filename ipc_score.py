@@ -33,7 +33,7 @@ ipc = []
 
 for time in times:
     ipc.append(ipc_score("100", "M", "T11", time ) )
-    print ( time, ipc_score("100", "M", "T11", time ) )
+#   print ( time, ipc_score("100", "M", "T11", time ) )
     
 
 
