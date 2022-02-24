@@ -23,9 +23,14 @@ def ipc_read_parameters(f):
         e = event_codes[ value[1] ]
         g = gender[ value[0] ]
         c = value[2]
+        cc = re.split(r'-|/', c)
+        print(cc)
+        #print(cc, cc[0][-2:], cc[1][-2:])
+        """
         if '/' in c:
-            cc = re.split('-|/', c)
+            cc = re.split(r'-|/', c)
             print(cc, cc[0][-2:], cc[1][-2:])
+            """
         if e not in ipc_parameters.keys():
             ipc_parameters[e] = {}
         if g not in ipc_parameters[e].keys():
