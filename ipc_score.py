@@ -14,7 +14,6 @@ def ipc_score(event, gender, cat, performance, youth = None, custom = None):
     b = coefficients[event][gender][cat][1]
     c = coefficients[event][gender][cat][2]
 
-    #print( a,b,c )
     if event in track_events:
         score = a*math.exp( -math.exp(b-c/p) )
     elif event in field_events:
