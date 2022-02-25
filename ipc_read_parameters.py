@@ -19,24 +19,22 @@ def ipc_read_parameters(f):
     ws = wb["Parameters"]
     params = {}
     for value in ws.iter_rows(min_row=2,min_col=1, max_col=6, values_only=True):
-        print(value)
         e = event_codes[ value[1] ]
         g = gender[ value[0] ]
-        c = value[2]
-        cc = re.split(r'-|/', c)
-        print(cc)
-        #print(cc, cc[0][-2:], cc[1][-2:])
-        """
-        if '/' in c:
-            cc = re.split(r'-|/', c)
-            print(cc, cc[0][-2:], cc[1][-2:])
-            """
+        cc = re.split(r'-|/', value[2])
+        if len(cc)>1:
+            x = cc[0][0]
+            i0 = int( cc[0][-2:] )
+            i1 = int( cc[-1][-2:] )
+            cc = [f'{x}{i}' for i in range(i0,i1+1)]
+            
         if e not in ipc_parameters.keys():
             ipc_parameters[e] = {}
         if g not in ipc_parameters[e].keys():
             ipc_parameters[e][g] = {}
-        if c not in ipc_parameters[e][g].keys():
-            ipc_parameters[e][g][c] = value[3:6]
+        for c in cc:
+            if c not in ipc_parameters[e][g].keys():
+                ipc_parameters[e][g][c] = value[3:6]
 
 def save_as_python(p):
     if isinstance(p, dict):
