@@ -1,4 +1,7 @@
 """
+Function to calculate points according to the IPC scoring tables (Raza scores)
+Reference: https://www.paralympic.org/athletics/technical-information
+
 TODO:
     + NOR customizations
 """
@@ -468,7 +471,7 @@ coefficients = {   '100': {   'F': {   'T11': (1200, '9.269555', '130.2561'),
                        'T47': (1200, 10.653824, 0.851656)}}}
 #===== ( end parameters block  )=====
 
-def ipc_score(event, gender, cat, performance, youth = None, custom = None):
+def ipc_score(event, gender, cat, performance, youth=None, custom=None):
     p = performance 
 
     a = float(coefficients[event][gender][cat][0])
@@ -477,12 +480,14 @@ def ipc_score(event, gender, cat, performance, youth = None, custom = None):
 
         
 
+    if custom = 'NOR':
+        if event = '60':
+            event = '100'
+            p *= 1.33
+
     if event in track_events:
         # convert hh:mm:ss.dd format to seconds
-        print(p, type(p))
-        print(f'{p}')
         p = sum(float(x) * 60 ** i for i, x in enumerate(reversed(f'{p}'.split(':'))))
-        print(p, type(p))
         if youth not in (None, False):
             c *= 1.16
         score = a*math.exp( -math.exp(b-c/p) )
