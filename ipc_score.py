@@ -1,7 +1,5 @@
 """
 TODO:
-    + youth corrections
-    + convert mm:ss format to seconds
     + NOR customizations
 """
 import math
@@ -477,9 +475,20 @@ def ipc_score(event, gender, cat, performance, youth = None, custom = None):
     b = float(coefficients[event][gender][cat][1])
     c = float(coefficients[event][gender][cat][2])
 
+        
+
     if event in track_events:
+        # convert hh:mm:ss.dd format to seconds
+        print(p, type(p))
+        print(f'{p}')
+        p = sum(float(x) * 60 ** i for i, x in enumerate(reversed(f'{p}'.split(':'))))
+        print(p, type(p))
+        if youth not in (None, False):
+            c *= 1.16
         score = a*math.exp( -math.exp(b-c/p) )
     elif event in field_events:
+        if youth not in (None, False):
+            c /= 0.83
         score = a*math.exp( -math.exp(b-c*p) )
     else:
         score = -1
