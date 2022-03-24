@@ -469,7 +469,7 @@ coefficients = {   '100': {   'F': {   'T11': (1200, '9.269555', '130.2561'),
                        'T45': (1200, 10.653824, 0.851656),
                        'T46': (1200, 10.653824, 0.851656),
                        'T47': (1200, 10.653824, 0.851656)}}}
-#===== ( end parameters block  )=====
+#===== ( end parameters block  ) =====
 
 def ipc_score(event, gender, cat, performance, youth=None, custom=None):
     p = performance 
@@ -483,7 +483,7 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
     if custom = 'NOR':
         if event = '60':
             event = '100'
-            p *= 1.33
+            p *= 1.667
 
     if event in track_events:
         # convert hh:mm:ss.dd format to seconds
@@ -500,6 +500,8 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
 
     score = math.floor(score)
     return score
+
+# ... testing
 
 watimes = [10.43, 10.98, 11.51, 12.12, 13.00, 13.89, 15.99 ]
 wa = [1063, 892, 742, 586, 394, 238, 25]
