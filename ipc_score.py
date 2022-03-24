@@ -474,7 +474,7 @@ coefficients = {   '100': {   'F': {   'T11': (1200, '9.269555', '130.2561'),
 def ipc_score(event, gender, cat, performance, youth=None, custom=None):
     p = performance 
 
-    a = float(coefficients[event][gender][cat][0])
+    a = coefficients[event][gender][cat][0]
     b = float(coefficients[event][gender][cat][1])
     c = float(coefficients[event][gender][cat][2])
 
