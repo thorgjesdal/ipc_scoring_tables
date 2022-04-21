@@ -480,8 +480,40 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
 
         
 
-    if custom = 'NOR':
-        if event = '60':
+    if custom == 'NOR':
+        if cat == 'FR1':
+            if gender == 'F':
+                if event == '100':
+                    cat = 'T51'
+                elif event == '1500':
+                    cat = 'T12'
+                    mm, ss = p.split(':')
+                    mm = int(mm)-4
+                    p = f'{mm}:{ss}'
+        elif cat == 'FR2':
+            if gender == 'F':
+                if event == '100':
+                    cat = 'T53'
+                elif event == '1500':
+                    cat = 'T34'
+                    mm, ss = p.split(':')
+                    mm = int(mm)-3
+                    p = f'{mm}:{ss}'
+            elif gender == 'M':
+                if event == '100':
+                    cat = 'T52'
+                elif event == '1500':
+                    cat = 'T11'
+                    gender = 'F'
+        elif cat == 'FR3':
+            if gender == 'F':
+                if event == '100':
+                    cat = 'T53'
+                elif event == '1500':
+                    cat = 'T51'
+                    gender = 'M'
+
+        if event == '60':
             event = '100'
             p *= 1.667
 
@@ -520,6 +552,7 @@ fig, ax = plt.subplots()
 plt.plot(times, ipc, label="ipc T41")
 plt.plot(watimes, wa, 'x', label="wa")
 plt.legend()
+plt.savefig('points.png')
 plt.show()
 
 
