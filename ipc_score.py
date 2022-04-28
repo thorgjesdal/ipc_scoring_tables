@@ -470,17 +470,28 @@ coefficients = {   '100': {   'F': {   'T11': (1200, '9.269555', '130.2561'),
                        'T46': (1200, 10.653824, 0.851656),
                        'T47': (1200, 10.653824, 0.851656)}}}
 #===== ( end parameters block  ) =====
+def secs(x):
+    secs = -1
+    secpat = '(\d\d[,.]\d?\d)'
+    minsecpat = '(\d?\d)[:.,](\d\d[,.]\d?\d)'
+    match1 = re.match(minsecpat,res)
+    match2 = re.match(secpat,res)
+    if match1:
+        m = match1.group(1)
+        s = match1.group(2).replace(',','.')
+        secs =  60.*int(mins) + ':' + float(secs)
+    elif match2:
+        secs = float( match2.group(1).replace(',','.') )
+    return secs
 
 def ipc_score(event, gender, cat, performance, youth=None, custom=None):
     p = performance 
 
-    a = coefficients[event][gender][cat][0]
-    b = float(coefficients[event][gender][cat][1])
-    c = float(coefficients[event][gender][cat][2])
-
-        
-
     if custom == 'NOR':
+        if event == '60':
+            event = '100'
+            p *= 1.667
+
         if cat == 'FR1':
             if gender == 'F':
                 if event == '100':
@@ -513,9 +524,10 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
                     cat = 'T51'
                     gender = 'M'
 
-        if event == '60':
-            event = '100'
-            p *= 1.667
+    a = coefficients[event][gender][cat][0]
+    b = float(coefficients[event][gender][cat][1])
+    c = float(coefficients[event][gender][cat][2])
+
 
     if event in track_events:
         # convert hh:mm:ss.dd format to seconds
@@ -535,22 +547,43 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
 
 # ... testing
 
-watimes = [10.43, 10.98, 11.51, 12.12, 13.00, 13.89, 15.99 ]
-wa = [1063, 892, 742, 586, 394, 238, 25]
+rr2_m_100 =  np.array([ '00:20.29', '00:20.70', '00:20.78', '00:21.26', '00:23.93', '00:29.47', '00:29.97' ])
 
-times = np.linspace(10.0,16.0, 101)
+
+
+#watimes = [10.43, 10.98, 11.51, 12.12, 13.00, 13.89, 15.99 ]
+#wa = [1063, 892, 742, 586, 394, 238, 25]
+
+times = np.linspace(15.0,30.0, 11)
+a = 1200.
+b = 7.325177
+c = 1932.6343
+#points = a*np.exp( -np.exp(b-c/times) )
+points = np.zeros(times.size)
+for i,t in enumerate(times):
+    points[i] = ipc_score('100', 'M', 'T52', t, custom='NOR' ) 
+
+
+print(times)
+print(points)
 ipc = []
 
-for time in times:
-    ipc.append(ipc_score("100", "M", "T12", time ) )
+cat = 'FR2'
+g = 'M'
+event = '100'
+secs = np.zeros(rr2_m_100.shape)
+for time in enumerate(rr2_m_100):
+    ipc.append(ipc_score(event, g, cat, time, custom='NOR' ) )
+    secs[i] = sum(float(x) * 60 ** i for i, x in enumerate(reversed(ts.split(':'))))
 #   print ( time, ipc_score("100", "M", "T11", time ) )
-    
 
-
+print(secs, ipc)
 
 fig, ax = plt.subplots()
-plt.plot(times, ipc, label="ipc T41")
-plt.plot(watimes, wa, 'x', label="wa")
+plt.plot(secs, ipc, 'o', label="M FR2")
+plt.plot(times,points)
+#plt.plot(watimes, wa, 'x', label="wa")
+#plt.plot(watimes, wa, 'x', label="wa")
 plt.legend()
 plt.savefig('points.png')
 plt.show()
