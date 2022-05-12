@@ -476,14 +476,12 @@ def secs(x):
     secs = -1
     secpat = '(\d\d[,.]\d?\d)'
     minsecpat = '(\d?\d)[:.,](\d\d[,.]\d?\d)'
-    print(type(x))
     x = f'{x}'
     match1 = re.match(minsecpat,x)
     match2 = re.match(secpat,x)
     if match1:
         m = match1.group(1)
         s = match1.group(2).replace(',','.')
-        print (m, s)
         secs =  60.*int(m) + float(s)
     elif match2:
         secs = float( match2.group(1).replace(',','.') )
@@ -537,9 +535,7 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
     if event in track_events:
         # convert hh:mm:ss.dd format to seconds
         #p = sum(float(x) * 60 ** i for i, x in enumerate(reversed(f'{p}'.split(':'))))
-        print(p)
         p = secs(p)
-        print(p)
         if youth not in (None, False):
             c *= 1.16
         score = a*math.exp( -math.exp(b-c/p) )
@@ -559,21 +555,16 @@ rr2_m_100 =  np.array([ '00:20.29', '00:20.70', '00:20.78', '00:21.26', '00:23.9
 
 
 
-#watimes = [10.43, 10.98, 11.51, 12.12, 13.00, 13.89, 15.99 ]
-#wa = [1063, 892, 742, 586, 394, 238, 25]
 
 times = np.linspace(15.0,30.0, 11)
 a = 1200.
 b = 7.325177
 c = 1932.6343
-#points = a*np.exp( -np.exp(b-c/times) )
 points = np.zeros(times.size)
 for i,t in enumerate(times):
     points[i] = ipc_score('100', 'M', 'T52', t, custom='NOR' ) 
 
 
-print(times)
-print(points)
 ipc = []
 
 cat = 'FR2'
@@ -581,19 +572,14 @@ g = 'M'
 event = '100'
 seconds = np.zeros(rr2_m_100.shape)
 for i, time in enumerate(rr2_m_100):
-    print(time)
     ipc.append(ipc_score(event, g, cat, time, custom='NOR' ) )
     #seconds[i] = sum(float(x) * 60 ** i for i, x in enumerate(reversed(time.split(':'))))
     seconds[i] = secs(time)
-#   print ( time, ipc_score("100", "M", "T11", time ) )
 
-print(secs, ipc)
 
 fig, ax = plt.subplots()
 plt.plot(seconds, ipc, 'o', label="M FR2")
 plt.plot(times,points, label = 'T52')
-#plt.plot(watimes, wa, 'x', label="wa")
-#plt.plot(watimes, wa, 'x', label="wa")
 plt.legend()
 plt.savefig('points.png')
 plt.show()
