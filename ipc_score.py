@@ -476,14 +476,14 @@ def secs(x):
     secs = -1
     secpat = '(\d\d[,.]\d?\d)'
     minsecpat = '(\d?\d)[:.,](\d\d[,.]\d?\d)'
-    print(type(x))
+#   print(type(x))
     x = f'{x}'
     match1 = re.match(minsecpat,x)
     match2 = re.match(secpat,x)
     if match1:
         m = match1.group(1)
         s = match1.group(2).replace(',','.')
-        print (m, s)
+#       print (m, s)
         secs =  60.*int(m) + float(s)
     elif match2:
         secs = float( match2.group(1).replace(',','.') )
@@ -537,9 +537,9 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
     if event in track_events:
         # convert hh:mm:ss.dd format to seconds
         #p = sum(float(x) * 60 ** i for i, x in enumerate(reversed(f'{p}'.split(':'))))
-        print(p)
+#       print(p)
         p = secs(p)
-        print(p)
+#       print(p)
         if youth not in (None, False):
             c *= 1.16
         score = a*math.exp( -math.exp(b-c/p) )
@@ -572,8 +572,8 @@ for i,t in enumerate(times):
     points[i] = ipc_score('100', 'M', 'T52', t, custom='NOR' ) 
 
 
-print(times)
-print(points)
+#print(times)
+#print(points)
 ipc = []
 
 cat = 'FR2'
@@ -581,13 +581,13 @@ g = 'M'
 event = '100'
 seconds = np.zeros(rr2_m_100.shape)
 for i, time in enumerate(rr2_m_100):
-    print(time)
+#   print(time)
     ipc.append(ipc_score(event, g, cat, time, custom='NOR' ) )
     #seconds[i] = sum(float(x) * 60 ** i for i, x in enumerate(reversed(time.split(':'))))
     seconds[i] = secs(time)
 #   print ( time, ipc_score("100", "M", "T11", time ) )
-
-print(secs, ipc)
+#
+##print(secs, ipc)
 
 fig, ax = plt.subplots()
 plt.plot(seconds, ipc, 'o', label="M FR2")
