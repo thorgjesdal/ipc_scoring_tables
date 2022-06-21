@@ -3,7 +3,6 @@ Function to calculate points according to the IPC scoring tables (Raza scores)
 Reference: https://www.paralympic.org/athletics/technical-information
 
 TODO:
-    + NOR customizations
 """
 import math
 import re
@@ -565,6 +564,11 @@ for i,t in enumerate(times):
     points[i] = ipc_score('100', 'M', 'T52', t, custom='NOR' ) 
 
 
+<<<<<<< HEAD
+=======
+#print(times)
+#print(points)
+>>>>>>> ef1fc98d4cd1ec0149740ea5bc9f548eb303bb9b
 ipc = []
 
 cat = 'FR2'
@@ -572,10 +576,20 @@ g = 'M'
 event = '100'
 seconds = np.zeros(rr2_m_100.shape)
 for i, time in enumerate(rr2_m_100):
+<<<<<<< HEAD
     ipc.append(ipc_score(event, g, cat, time, custom='NOR' ) )
     #seconds[i] = sum(float(x) * 60 ** i for i, x in enumerate(reversed(time.split(':'))))
     seconds[i] = secs(time)
 
+=======
+#   print(time)
+    ipc.append(ipc_score(event, g, cat, time, custom='NOR' ) )
+    #seconds[i] = sum(float(x) * 60 ** i for i, x in enumerate(reversed(time.split(':'))))
+    seconds[i] = secs(time)
+#   print ( time, ipc_score("100", "M", "T11", time ) )
+#
+##print(secs, ipc)
+>>>>>>> ef1fc98d4cd1ec0149740ea5bc9f548eb303bb9b
 
 fig, ax = plt.subplots()
 plt.plot(seconds, ipc, 'o', label="M FR2")
