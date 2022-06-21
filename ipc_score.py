@@ -495,7 +495,7 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
             event = '100'
             p *= 1.667
 
-        if cat == 'FR1':
+        if cat == 'RR1':
             if gender == 'F':
                 if event == '100':
                     cat = 'T51'
@@ -504,7 +504,7 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
                     mm, ss = p.split(':')
                     mm = int(mm)-4
                     p = f'{mm}:{ss}'
-        elif cat == 'FR2':
+        elif cat == 'RR2':
             if gender == 'F':
                 if event == '100':
                     cat = 'T53'
@@ -519,7 +519,7 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
                 elif event == '1500':
                     cat = 'T11'
                     gender = 'F'
-        elif cat == 'FR3':
+        elif cat == 'RR3':
             if gender == 'F':
                 if event == '100':
                     cat = 'T53'
@@ -549,10 +549,10 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
     score = math.floor(score)
     return score
 
+"""
 # ... testing
 
 rr2_m_100 =  np.array([ '00:20.29', '00:20.70', '00:20.78', '00:21.26', '00:23.93', '00:29.47', '00:29.97' ])
-
 
 
 
@@ -584,7 +584,7 @@ plt.legend()
 plt.savefig('points.png')
 plt.show()
 
-
+"""
 
 """
 # code example convert hh:mm:ss format to secs
