@@ -7,9 +7,6 @@ TODO:
 import math
 import re
 
-import matplotlib.pyplot as plt
-import numpy as np
-
 track_events = ("100", "200", "400", "800", "1500", "5000", "10000" )
 field_events = ("SP", "DT", "JT", "OT", "HJ", "LJ", "TJ" )
 
@@ -541,6 +538,7 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
     elif event in field_events:
         if youth not in (None, False):
             c /= 0.83
+        p = float(p)
         score = a*math.exp( -math.exp(b-c*p) )
     else:
         score = -1
@@ -548,61 +546,3 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
     score = math.floor(score)
     return score
 
-"""
-# ... testing
-
-rr2_m_100 =  np.array([ '00:20.29', '00:20.70', '00:20.78', '00:21.26', '00:23.93', '00:29.47', '00:29.97' ])
-
-
-
-times = np.linspace(15.0,30.0, 11)
-a = 1200.
-b = 7.325177
-c = 1932.6343
-points = np.zeros(times.size)
-for i,t in enumerate(times):
-    points[i] = ipc_score('100', 'M', 'T52', t, custom='NOR' ) 
-
-
-<<<<<<< HEAD
-=======
-#print(times)
-#print(points)
->>>>>>> ef1fc98d4cd1ec0149740ea5bc9f548eb303bb9b
-ipc = []
-
-cat = 'FR2'
-g = 'M'
-event = '100'
-seconds = np.zeros(rr2_m_100.shape)
-for i, time in enumerate(rr2_m_100):
-<<<<<<< HEAD
-    ipc.append(ipc_score(event, g, cat, time, custom='NOR' ) )
-    #seconds[i] = sum(float(x) * 60 ** i for i, x in enumerate(reversed(time.split(':'))))
-    seconds[i] = secs(time)
-
-=======
-#   print(time)
-    ipc.append(ipc_score(event, g, cat, time, custom='NOR' ) )
-    #seconds[i] = sum(float(x) * 60 ** i for i, x in enumerate(reversed(time.split(':'))))
-    seconds[i] = secs(time)
-#   print ( time, ipc_score("100", "M", "T11", time ) )
-#
-##print(secs, ipc)
->>>>>>> ef1fc98d4cd1ec0149740ea5bc9f548eb303bb9b
-
-fig, ax = plt.subplots()
-plt.plot(seconds, ipc, 'o', label="M FR2")
-plt.plot(times,points, label = 'T52')
-plt.legend()
-plt.savefig('points.png')
-plt.show()
-
-"""
-
-"""
-# code example convert hh:mm:ss format to secs
-ts = '1:23:45'
-secs = sum(int(x) * 60 ** i for i, x in enumerate(reversed(ts.split(':'))))
-print(secs)
-"""
