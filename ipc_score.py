@@ -475,15 +475,19 @@ coefficients = {   '100': {   'F': {   'T11': (1200, 9.099032, 128.1699),
 #===== ( end parameters block  )=====
 
 def secs(x):
+    print(x)
     secs = -1
     secpat = '(\d\d[,.]\d?\d)'
     minsecpat = '(\d?\d)[:.,](\d\d[,.]\d?\d)'
     x = f'{x}'
-    match1 = re.match(minsecpat,x)
+#   match1 = re.match(minsecpat,x)
+    match1 = re.search(minsecpat,x)
     match2 = re.match(secpat,x)
+    print(match1)
     if match1:
         m = match1.group(1)
         s = match1.group(2).replace(',','.')
+        print(m,s)
         secs =  60.*int(m) + float(s)
     elif match2:
         secs = float( match2.group(1).replace(',','.') )
@@ -498,7 +502,7 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
             p = float(p)
             p *= 1.667
 
-"""
+        """
         if cat == 'RR1':
             if gender == 'F':
                 if event == '100':
@@ -530,19 +534,21 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
                 elif event == '1500':
                     cat = 'T51'
                     gender = 'M'
-"""
-
+        """
     a = coefficients[event][gender][cat][0]
     b = float(coefficients[event][gender][cat][1])
     c = float(coefficients[event][gender][cat][2])
 
 
+    print(a,b,c)
+    print(type(a),type(b),type(c))
     if event in track_events:
         # convert hh:mm:ss.dd format to seconds
         #p = sum(float(x) * 60 ** i for i, x in enumerate(reversed(f'{p}'.split(':'))))
         p = secs(p)
         if youth not in (None, False):
             c *= 1.16
+        print(p)
         score = a*math.exp( -math.exp(b-c/p) )
     elif event in field_events:
         if youth not in (None, False):
