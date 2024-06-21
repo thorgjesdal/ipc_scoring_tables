@@ -502,7 +502,7 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
             p = float(p)
             p *= 1.667
 
-#        """
+         """
         if cat == 'RR1':
             if gender == 'F':
                 if event == '100':
@@ -534,7 +534,7 @@ def ipc_score(event, gender, cat, performance, youth=None, custom=None):
                 elif event == '1500':
                     cat = 'T51'
                     gender = 'M'
-#        """
+         """
     a = coefficients[event][gender][cat][0]
     b = float(coefficients[event][gender][cat][1])
     c = float(coefficients[event][gender][cat][2])
